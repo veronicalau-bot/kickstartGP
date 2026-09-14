@@ -37,7 +37,6 @@ const copy = {
   scanNote: { 'zh-HK': '他們通常只有數秒，找出你是誰、做過甚麼。', en: 'They often have seconds to learn who you are and what you do.' },
   score: { 'zh-HK': '業界第一印象', en: 'Industry first impression' },
   replay: { 'zh-HK': '重新挑戰', en: 'Play again' },
-  resultLead: { 'zh-HK': '這個分數評估資料呈現方式，而不是你的藝術能力。', en: 'This score measures presentation, not artistic ability.' },
   motion: { 'zh-HK': '減少動態', en: 'Reduce motion' },
 }
 
@@ -161,7 +160,6 @@ function App() {
           <p>{tx(copy.score, locale)}</p>
           <div className="score-number">{result.score.total}<span>/100</span></div>
           <h1>{tx(badgeLabel[result.badge], locale)}</h1>
-          <p className="result-lead">{tx(copy.resultLead, locale)}</p>
           <div className="score-bars">
             {([
               ['FIRST IMPRESSION', result.score.impression, 15],
@@ -171,6 +169,7 @@ function App() {
               ['RIGHTS READY', result.score.rights, 15],
             ] as const).map(([label, value, max]) => <div key={label}><span>{label}</span><div><i style={{ width: `${(value / max) * 100}%` }} /></div><b>{value}/{max}</b></div>)}
           </div>
+          <h2 className="feedback-title">Graduate Profiles 小貼示</h2>
           <ul className="feedback-list">{result.feedback.map((item) => <li key={item.en}>{tx(item, locale)}</li>)}</ul>
           <button className="primary-button" onClick={game.start}><span className="button-label">{tx(copy.replay, locale)}</span><span className="button-arrow">↻</span></button>
         </section>
