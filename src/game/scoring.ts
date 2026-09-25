@@ -43,7 +43,7 @@ export function scoreProfile(selections: ProfileSelections): ScoreResult {
   }
 
   if (profileInfo < 11) {
-    feedback.push(text('核對正式姓名、課程、主修、畢業年份及公開聯絡方法。', 'Check your formal name, programme, major, graduation year and public contact.'))
+    feedback.push(text('核對正式姓名、課程、主修、畢業年份及公開的 Facebook／Instagram。', 'Check your formal name, programme, major, graduation year and public Facebook/Instagram profiles.'))
   } else {
     feedback.push(text('個人資料完整準確，專業方向清楚。', 'Your personal details are complete and your direction is clear.'))
   }

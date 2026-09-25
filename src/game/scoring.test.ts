@@ -9,6 +9,14 @@ const byId = (collection: keyof typeof materials, id: string) => {
 }
 
 describe('scoreProfile', () => {
+  it('provides bilingual improvement guidance for every material', () => {
+    const allMaterials = Object.values(materials).flat()
+
+    expect(allMaterials).toHaveLength(24)
+    expect(allMaterials.every((material) => material.improvement['zh-HK'].length > 0)).toBe(true)
+    expect(allMaterials.every((material) => material.improvement.en.length > 0)).toBe(true)
+  })
+
   it('awards Showcase Ready to a complete rights-cleared profile', () => {
     const result = scoreProfile({
       portrait: byId('portrait', 'portrait-clean'),
@@ -42,17 +50,21 @@ describe('scoreProfile', () => {
   })
 
   it('scores complete public details above incomplete private details', () => {
+    const completeDetails = byId('details', 'details-complete')
+    const privateDetails = byId('details', 'details-private')
     const complete = scoreProfile({
-      details: byId('details', 'details-complete'),
+      details: completeDetails,
       experiences: [],
       gallery: [],
     })
     const incomplete = scoreProfile({
-      details: byId('details', 'details-private'),
+      details: privateDetails,
       experiences: [],
       gallery: [],
     })
 
+    expect(completeDetails.profile?.socialPlatforms).toEqual(['facebook', 'instagram'])
+    expect(privateDetails.profile?.socialPlatforms).toEqual([])
     expect(complete.score.profileInfo).toBe(15)
     expect(incomplete.score.profileInfo).toBeLessThan(complete.score.profileInfo)
     expect(incomplete.feedback.some((item) => item.en.includes('formal name'))).toBe(true)

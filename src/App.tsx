@@ -1,8 +1,9 @@
 import './game.css'
+import { FaFacebookF, FaInstagram } from 'react-icons/fa'
 import { badgeLabel, scoreProfile } from './game/scoring'
 import { materials, roundCopy } from './game/content'
 import { roundOrder, useGameMachine } from './game/useGameMachine'
-import type { Locale, Material, ProfileSelections } from './game/types'
+import type { Locale, Material, ProfileSelections, Quality, SocialPlatform } from './game/types'
 
 const copy = {
   brand: { 'zh-HK': '畢業生專頁模擬器', en: 'Graduate Profile Simulator' },
@@ -23,6 +24,9 @@ const copy = {
   lookFor: { 'zh-HK': '尋找', en: 'LOOK FOR' },
   avoid: { 'zh-HK': '避免', en: 'AVOID' },
   capture: { 'zh-HK': '選取素材', en: 'Capture material' },
+  selectedMaterial: { 'zh-HK': '你選取了', en: 'You selected' },
+  reason: { 'zh-HK': '原因', en: 'Why' },
+  improvement: { 'zh-HK': '改善方法', en: 'How to improve' },
   litOption: { 'zh-HK': '亮起的選項', en: 'LIT OPTION' },
   captured: { 'zh-HK': '已選取', en: 'SELECTED' },
   selected: { 'zh-HK': '已選', en: 'SELECTED' },
@@ -42,6 +46,12 @@ const copy = {
 
 const tx = (value: Record<Locale, string>, locale: Locale) => value[locale]
 
+const verdicts: Record<Quality, { label: Record<Locale, string>; symbol: string }> = {
+  strong: { label: { 'zh-HK': '適合使用', en: 'Suitable to use' }, symbol: '✓' },
+  mixed: { label: { 'zh-HK': '需要改善', en: 'Needs improvement' }, symbol: '!' },
+  weak: { label: { 'zh-HK': '不適合公開', en: 'Not suitable to publish' }, symbol: '×' },
+}
+
 function MaterialVisual({ material, compact = false }: { material: Material; compact?: boolean }) {
   return (
     <div
@@ -54,6 +64,35 @@ function MaterialVisual({ material, compact = false }: { material: Material; com
         ? <img className="material-image" src={material.imageSrc} alt="" draggable="false" />
         : <><span className="visual-light" /><span className="visual-figure"><i /></span>{material.round === 'details' && <span className="visual-details-lines"><i /><i /><i /><i /></span>}</>}
     </div>
+  )
+}
+
+function SocialLinks({ platforms }: { platforms: SocialPlatform[] }) {
+  if (!platforms.length) return <>—</>
+
+  return (
+    <span className="social-links">
+      {platforms.includes('facebook') && <span className="social-link"><FaFacebookF aria-hidden="true" /> FACEBOOK</span>}
+      {platforms.includes('instagram') && <span className="social-link"><FaInstagram aria-hidden="true" /> INSTAGRAM</span>}
+    </span>
+  )
+}
+
+function SelectionFeedback({ material, locale, compact = false }: { material: Material; locale: Locale; compact?: boolean }) {
+  const verdict = verdicts[material.quality]
+
+  return (
+    <section className={`selection-feedback verdict-${material.quality} ${compact ? 'is-compact' : ''}`} aria-live={compact ? 'polite' : undefined}>
+      <header>
+        <span className="verdict-symbol" aria-hidden="true">{verdict.symbol}</span>
+        <span className="feedback-material"><small>{tx(copy.selectedMaterial, locale)}</small><strong>{tx(material.title, locale)}</strong></span>
+        <strong className="verdict-label">{tx(verdict.label, locale)}</strong>
+      </header>
+      <div className="feedback-details">
+        <p><strong>{tx(copy.reason, locale)}</strong><span>{tx(material.note, locale)}</span></p>
+        <p><strong>{tx(copy.improvement, locale)}</strong><span>{tx(material.improvement, locale)}</span></p>
+      </div>
+    </section>
   )
 }
 
@@ -73,7 +112,7 @@ function ProfilePreview({ selections, locale, scanning = false }: { selections: 
             <div><dt>{tx(copy.programme, locale)}</dt><dd>{profile ? tx(profile.programme, locale) : '—'}</dd></div>
             <div><dt>{tx(copy.major, locale)}</dt><dd>{profile ? tx(profile.major, locale) : '—'}</dd></div>
             <div><dt>{tx(copy.year, locale)}</dt><dd>{profile?.year ?? '—'}</dd></div>
-            <div><dt>{tx(copy.contact, locale)}</dt><dd>{profile ? tx(profile.contact, locale) : '—'}</dd></div>
+            <div><dt>{tx(copy.contact, locale)}</dt><dd>{profile ? <SocialLinks platforms={profile.socialPlatforms} /> : '—'}</dd></div>
           </dl>
         </div>
       </header>
@@ -220,11 +259,11 @@ function App() {
         {progressNav}
         <div className="complete-layout">
           <section className="complete-card">
-            <div className="complete-mark">✓</div>
+            <div className="complete-mark" aria-hidden="true">{roundOrder.indexOf(round) + 1}</div>
             <p className="eyebrow">{tx(roundCopy[round].eyebrow, locale)}</p>
             <h1>{tx(copy.stepComplete, locale)}</h1>
             {game.capturedCount > 0
-              ? <><p className="complete-count"><strong>{game.capturedCount}</strong> {tx(copy.selectedCount, locale)}</p>{game.lastCapture && <p className="complete-note">{tx(game.lastCapture.note, locale)}</p>}</>
+              ? <><p className="complete-count"><strong>{game.capturedCount}</strong> {tx(copy.selectedCount, locale)}</p>{game.lastCapture && <SelectionFeedback material={game.lastCapture} locale={locale} />}</>
               : <p className="complete-note">{tx(copy.noSelection, locale)}</p>}
             <button className="primary-button" onClick={game.continueToNextRound}><span className="button-label">{tx(isLastRound ? copy.finishProfile : copy.nextRound, locale)}</span><span className="button-arrow">→</span></button>
           </section>
@@ -264,7 +303,7 @@ function App() {
             <div className="slot-count"><strong>{game.capturedCount}</strong><span>/ {game.target} {tx(copy.selected, locale)}</span></div>
             <button className="capture-button" onClick={game.capture} disabled={!current} aria-label={current ? `${tx(copy.capture, locale)}: ${tx(current.title, locale)}` : tx(copy.capture, locale)}><span className="capture-icon">◎</span>{tx(copy.capture, locale)}<small>ENTER</small></button>
           </div>
-          {game.lastCapture && <p className="capture-feedback">{tx(game.lastCapture.note, locale)}</p>}
+          {game.lastCapture && <SelectionFeedback material={game.lastCapture} locale={locale} compact />}
         </section>
         <aside className="preview-panel">
           <div className="preview-label"><span>LIVE PROFILE</span><span>{game.capturedCount}/{game.target}</span></div>

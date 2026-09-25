@@ -4,6 +4,8 @@ export type RoundId = 'portrait' | 'details' | 'experience' | 'gallery'
 
 export type Quality = 'strong' | 'mixed' | 'weak'
 
+export type SocialPlatform = 'facebook' | 'instagram'
+
 export type LocalizedText = {
   'zh-HK': string
   en: string
@@ -15,6 +17,7 @@ export type Material = {
   title: LocalizedText
   detail: LocalizedText
   note: LocalizedText
+  improvement: LocalizedText
   quality: Quality
   color: string
   imageSrc?: string
@@ -23,7 +26,7 @@ export type Material = {
     programme: LocalizedText
     major: LocalizedText
     year: string
-    contact: LocalizedText
+    socialPlatforms: SocialPlatform[]
   }
   traits: {
     impression?: number
