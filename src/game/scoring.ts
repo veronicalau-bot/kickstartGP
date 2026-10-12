@@ -22,8 +22,8 @@ export function scoreProfile(selections: ProfileSelections): ScoreResult {
   const profileInfo = cap(sumTrait(details, 'profileInfo'), 15)
   const completeness = cap(sumTrait(selections.experiences, 'completeness') * (20 / 28), 20)
   const curation = cap(sumTrait(selections.experiences, 'curation') * (15 / 20), 15)
-  const gallery = cap(sumTrait(selections.gallery, 'gallery') * (20 / 24), 20)
-  const rights = cap(sumTrait(selections.gallery, 'rights') * (15 / 18), 15)
+  const gallery = cap(sumTrait(selections.gallery, 'gallery') * (20 / 16), 20)
+  const rights = cap(sumTrait(selections.gallery, 'rights') * (15 / 12), 15)
   const total = impression + profileInfo + completeness + curation + gallery + rights
 
   const badge: ScoreResult['badge'] = total >= 90

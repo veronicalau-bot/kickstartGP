@@ -134,7 +134,7 @@ function ProfilePreview({ selections, locale, scanning = false }: { selections: 
         <h3>{tx(copy.gallery, locale)}</h3>
         <div className="gallery-grid">
           {selections.gallery.map((item) => <MaterialVisual key={item.id} material={item} compact />)}
-          {Array.from({ length: Math.max(0, 6 - selections.gallery.length) }, (_, index) => <div className="gallery-empty" key={index} />)}
+          {Array.from({ length: Math.max(0, 4 - selections.gallery.length) }, (_, index) => <div className="gallery-empty" key={index} />)}
         </div>
       </section>
       {scanning && <div className="scan-line" />}

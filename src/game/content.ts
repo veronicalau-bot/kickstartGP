@@ -40,8 +40,8 @@ export const roundCopy: Record<RoundId, { eyebrow: LocalizedText; title: Localiz
   gallery: {
     eyebrow: text('第四幕 · 視覺證據', 'ACT IV · VISUAL EVIDENCE'),
     title: text('策展你的 Photo Gallery', 'Curate your photo gallery'),
-    instruction: text('跟隨亮光，在適當一刻選取 6 張清晰、多元並已確認使用權的相片。', 'Follow the light and capture 6 clear, varied, rights-cleared images at the right moment.'),
-    goal: text('在 30 秒內為相片集選取 6 張具代表性的圖片。', 'Curate 6 representative gallery images in 30 seconds.'),
+    instruction: text('跟隨亮光，在適當一刻選取 4 張清晰、多元並已確認使用權的相片。', 'Follow the light and capture 4 clear, varied, rights-cleared images at the right moment.'),
+    goal: text('在 30 秒內為相片集選取 4 張具代表性的圖片。', 'Curate 4 representative gallery images in 30 seconds.'),
     lookFor: text('清晰、多元、能展示作品和創作過程，而且已獲授權。', 'Look for clear, varied, rights-cleared evidence of your work and process.'),
     avoid: text('避免水印、低解像度、內容重複或主體不清。', 'Avoid watermarks, low resolution, repetition, and an unclear subject.'),
   },

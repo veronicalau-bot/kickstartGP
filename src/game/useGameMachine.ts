@@ -10,7 +10,7 @@ const targetCount: Record<RoundId, number> = {
   portrait: 1,
   details: 1,
   experience: 4,
-  gallery: 6,
+  gallery: 4,
 }
 
 const roundTime: Record<RoundId, number> = {

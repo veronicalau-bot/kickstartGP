@@ -32,13 +32,12 @@ describe('scoreProfile', () => {
         byId('gallery', 'gallery-performance'),
         byId('gallery', 'gallery-backstage'),
         byId('gallery', 'gallery-portrait'),
-        byId('gallery', 'gallery-repeat'),
-        byId('gallery', 'gallery-ensemble'),
       ],
     })
 
     expect(result.score.total).toBeGreaterThanOrEqual(90)
     expect(result.badge).toBe('showcase')
+    expect(result.score.gallery).toBe(20)
     expect(result.score.rights).toBe(15)
   })
 
@@ -76,10 +75,8 @@ describe('scoreProfile', () => {
       byId('gallery', 'gallery-performance'),
       byId('gallery', 'gallery-backstage'),
       byId('gallery', 'gallery-portrait'),
-      byId('gallery', 'gallery-repeat'),
-      byId('gallery', 'gallery-ensemble'),
     ]
-    const unsafeGallery = [...safeGallery.slice(0, 5), byId('gallery', 'gallery-watermark')]
+    const unsafeGallery = [...safeGallery.slice(0, 3), byId('gallery', 'gallery-watermark')]
 
     const safe = scoreProfile({ experiences: [], gallery: safeGallery })
     const unsafe = scoreProfile({ experiences: [], gallery: unsafeGallery })
