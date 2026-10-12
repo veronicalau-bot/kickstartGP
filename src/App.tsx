@@ -210,7 +210,7 @@ function App() {
           </div>
           <h2 className="feedback-title">Graduate Profiles 小貼示</h2>
           <ul className="feedback-list">{result.feedback.map((item) => <li key={item.en}>{tx(item, locale)}</li>)}</ul>
-          <button className="primary-button" onClick={game.start}><span className="button-label">{tx(copy.replay, locale)}</span><span className="button-arrow">↻</span></button>
+          <button className="primary-button" onClick={game.returnToWelcome}><span className="button-label">{tx(copy.replay, locale)}</span><span className="button-arrow">↻</span></button>
         </section>
         <div className="result-profile"><ProfilePreview selections={game.selections} locale={locale} /></div>
       </main>

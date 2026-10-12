@@ -63,6 +63,15 @@ export function useGameMachine() {
     setPhase('briefing')
   }
 
+  const returnToWelcome = () => {
+    setSelections(emptySelections())
+    setRoundIndex(0)
+    setActiveIndex(0)
+    setLastCapture(null)
+    setTimeLeft(0)
+    setPhase('welcome')
+  }
+
   const beginRound = () => {
     setActiveIndex(0)
     setLastCapture(null)
@@ -137,7 +146,8 @@ export function useGameMachine() {
       if (event.key !== 'Enter' || event.repeat) return
 
       event.preventDefault()
-      if (phase === 'welcome' || phase === 'results') start()
+      if (phase === 'welcome') start()
+      else if (phase === 'results') returnToWelcome()
       else if (phase === 'briefing') beginRound()
       else if (phase === 'playing') capture()
       else if (phase === 'roundComplete') continueToNextRound()
@@ -172,6 +182,7 @@ export function useGameMachine() {
     setReducedMotion,
     setPhase,
     start,
+    returnToWelcome,
     beginRound,
     continueToNextRound,
     capture,
