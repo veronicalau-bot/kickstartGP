@@ -6,8 +6,8 @@ import { roundOrder, useGameMachine } from './game/useGameMachine'
 import type { Locale, Material, ProfileSelections, Quality, SocialPlatform } from './game/types'
 
 const copy = {
-  brand: { 'zh-HK': '畢業生專頁模擬器', en: 'Graduate Profile Simulator' },
-  intro: { 'zh-HK': '三分鐘，建立一個讓業界看見你的專頁。', en: 'Three minutes to build a profile the industry can read.' },
+  brand: { 'zh-HK': '畢業生簡歷模擬器', en: 'Graduate Profile Simulator' },
+  intro: { 'zh-HK': '三分鐘，建立一個讓業界看見你的簡歷。', en: 'Three minutes to build a profile the industry can read.' },
   lead: { 'zh-HK': '看準素材。抓緊時機。每一個選擇，都會改變你的第一印象。', en: 'Read the material. Time your capture. Every choice changes your first impression.' },
   start: { 'zh-HK': '開始挑戰', en: 'Start challenge' },
   howToTitle: { 'zh-HK': '玩法非常簡單', en: 'How to play' },

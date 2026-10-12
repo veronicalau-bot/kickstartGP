@@ -125,7 +125,7 @@ export const materials: Record<RoundId, Material[]> = {
       id: 'details-nickname', round: 'details', quality: 'weak', color: '#f4d6cf',
       title: text('暱稱＋只有 Instagram', 'Nickname + Instagram only'),
       detail: text('「Chris仔」· 欠缺正式中英文姓名', '“Chris W.” · no formal bilingual name'),
-      note: text('公開專頁應使用能清楚識別你的正式姓名', 'Use a formal name that identifies you clearly on a public profile'),
+      note: text('公開簡歷應使用能清楚識別你的正式姓名', 'Use a formal name that identifies you clearly on a public profile'),
       improvement: text('改用正式中英文姓名，並只連結適合業界瀏覽的公開社交平台。', 'Use your formal bilingual name and link only public social profiles suitable for industry viewers.'),
       profile: {
         name: text('Chris仔', 'Chris W.'),
